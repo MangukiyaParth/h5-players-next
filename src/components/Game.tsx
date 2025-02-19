@@ -5,7 +5,7 @@ import Sidebar from '@/components/Sidebar';
 import CssBaseline from '@mui/material/CssBaseline';
 import { useEffect, useState } from 'react';
 import { GameThumb } from './Home';
-import { fetchGameDetails, fetchRelatedGames } from '@/app/lib/games';
+import { fetchGameDescription, fetchGameDetails, fetchRelatedGames } from '@/app/lib/games';
 import useScreenWidth from '@/hooks/useScreenWidth';
 
 export const Game = ({id}:{id: any}) => {
@@ -23,7 +23,7 @@ export const Game = ({id}:{id: any}) => {
                     <GameIframe gameName={gameName} />
                     <GameBottomAd />
                     <RelatedGamesBottom gameName={gameName} />
-                    {/* <GameInfo /> */}
+                    <GameInfo gameName={gameName} />
                 </div>
                 <div className="GamePageDesktop_rightSidebar">
                     <div className="GamePageDesktop_rightMpuContainer">
@@ -319,7 +319,19 @@ export const RelatedGamesBottom = ({gameName}: {gameName: string}) => {
     );
 };
 
-export const GameInfo = () => {
+export const GameInfo = ({gameName}: {gameName: string}) => {
+    const [gameDescription, setGameDescription] = useState("");
+
+    useEffect(()=>{
+        getDescription();
+	},[]);
+
+    const getDescription = async () => {
+		let gameData = await fetchGameDescription(gameName);
+        if(gameData && gameData.success && gameData.data){
+            setGameDescription(gameData.data);
+        }
+	}
     return (
         <div className="GamePageDesktop_gameInfoContainer">
             <div className="GameInfo">
@@ -334,121 +346,7 @@ export const GameInfo = () => {
                         </div>
                     </div>
                     <div className="GameInfo_roundedCornersContainer">
-                        <div>
-                            <p>Bloxd.io is an IO adventure game featuring Minecraft graphics and various game modes. The game modes feature parkour, sandbox creativity, and combat, depending on which mode you choose to play.</p>
-                        </div>
-                        <div>
-                            <h2>How to Play Bloxd.io</h2>
-                            <p>Bloxd.io is a sandbox game in which you navigate challenging obstacle courses by timing your jumps and movements accurately. In survival mode, you gather resources, craft tools, and fend off enemies to stay alive. There are several game modes to choose from to start the game, each with a variety of challenges.</p>
-                            <h3>Bloxd.io Game Modes</h3>
-                            <p>Choose from one of the many game modes to begin your Bloxd.io journey.</p>
-                            <h4>BloxdHop.io</h4>
-                            <p>In the BloxdHop game mode your mission is to reach the end of the map within the given timeframe. To reach the end, you must hop through the level parkour-style onto blocks of various sizes.</p>
-                            <h4>DoodleCube</h4>
-                            <p>This game mode is similar to drawing games like Gartic.io. Players create objects based on the theme presented, and other users vote on how representative they are of that object.</p>
-                            <h4>EvilTower</h4>
-                            <p>The mission is to reach the top of the Evil Tower! Similar to BloxdHop, you use your parkour skills to reach the end. EvilTower is inspired by Roblox’s Tower of Hell.</p>
-                            <h4>Peaceful</h4>
-                            <p>Peaceful mode is like creative mode in Minecraft. You can roam freely collecting resources and building here.</p>
-                            <h4>CubeWarfare</h4>
-                            <p>This game mode adds exciting battles. Compete against other players in a third-person shooter setting where you can also build blocks.</p>
-                            <h4>Full list of game modes.</h4>
-                            <p>Bloxd.io is regularly updated with fun new features and modes. Here is a selection of current game modes.</p>
-                            <ul>
-                                <li>BloxdHop.io</li>
-                                <li>DoodleCube</li>
-                                <li>EvilTower</li>
-                                <li>Peaceful</li>
-                                <li>CubeWarfare</li>
-                                <li>Survival</li>
-                                <li>Peaceful</li>
-                                <li>Creative</li>
-                                <li>Bedwars</li>
-                                <li>Sky Wars</li>
-                                <li>OneBlock</li>
-                                <li>Greenville</li>
-                                <li>Hide and Seek</li>
-                                <li>Murder Mystery</li>
-                                <li>Plots</li>
-                                <li>Pirates</li>
-                                <li>Survival Royale</li>
-                                <li>Worlds</li>
-                            </ul>
-                            <h3>More Games Like This</h3>
-                            <p>Although Bloxd.io is a unique game that provides endless entertainment, there are similar titles to check out when you're finished playing. Other<a target="_blank" href="https://www.crazygames.com/c/io"> IO games</a> like this include <a target="_blank" href="https://www.crazygames.com/game/krunker-io">Krunker</a>, <a target="_blank" href="https://www.crazygames.com/game/bonkio">Bonk io</a>, and <a target="_blank" href="https://www.crazygames.com/game/taming-io">Taming io</a>. </p>
-                            <h3>Features</h3>
-                            <ul>
-                                <li>Explore fun, voxelated worlds for free in your web browser.</li>
-                                <li>Play various game modes with different objectives.</li>
-                                <li>Earn gold from your achievements and spend it in the store.</li>
-                                <li>Join your friends in multiplayer games.</li>
-                            </ul>
-                            <h3>Release Date</h3>
-                            <p>February 2021</p>
-                            <h3>Developer</h3>
-                            <p>Arthur made BloxdHop.io.</p>
-                            <h3>Platform</h3>
-                            <p>Web browser (desktop and mobile)</p></div><div className="css-zrsyhi"><h3>Controls</h3>
-                            <ul>
-                                <li>WASD to move</li>
-                                <li>Shift or double-tap W to run</li>
-                                <li>C, Z, \, or Caps Lock to crouch</li>
-                                <li>T or Enter to chat</li>
-                                <li>B to open shop</li>
-                                <li>/ to start command</li>
-                                <li>O to open the menu</li>
-                            </ul>
-                            <h4>DoodleCube Controls</h4>
-                            <ul>
-                                <li>Place blocks: right mouse button</li>
-                                <li>Destroy placed blocks: left mouse button</li>
-                                <li>Switch blocks: number keys or mouse middle button</li>
-                            </ul>
-                            <h4>Commands</h4>
-                            <ul>
-                                <li>/rtv - not a fan of this map? Vote to skip it!</li>
-                                <li>/players - see the current players in your lobby</li>
-                                <li>/xp - See your level and XP</li>
-                                <li>/played - See how much time you've spent having tons of fun</li>
-                                <li>/nobuffs - Play through the maps without any buffs to place on a separate leaderboard!</li>
-                            </ul>
-                        </div>
-                        <h2>FAQ</h2>
-                        <div>
-                            <div>
-                                <h3>When did Bloxd.io come out?</h3>
-                                <div><p>Bloxd.io came out in March 2021.</p></div>
-                            </div>
-                            <div>
-                                <h3>Is Bloxd.io safe?</h3>
-                                <div><p>As of 2024, there have been no reports of private information leaks. Create a personal account to ensure safe playing.</p></div>
-                            </div>
-                            <div>
-                                <h3>What are the game modes in Bloxd.io?</h3>
-                                <div>
-                                    <ul>
-                                        <li>BloxdHop.io</li>
-                                        <li>DoodleCube</li>
-                                        <li>EvilTower</li>
-                                        <li>Peaceful</li>
-                                        <li>CubeWarfare</li>
-                                        <li>Survival</li>
-                                        <li>Peaceful</li>
-                                        <li>Creative</li>
-                                        <li>Bedwars</li>
-                                        <li>Sky Wars</li>
-                                        <li>OneBlock</li>
-                                        <li>Greenville</li>
-                                        <li>Hide and Seek</li>
-                                        <li>Murder Mystery</li>
-                                        <li>Plots</li>
-                                        <li>Pirates</li>
-                                        <li>Survival Royale</li>
-                                        <li>Worlds</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                        {gameDescription}
                     </div>
                     
                 </div>

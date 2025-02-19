@@ -1059,6 +1059,21 @@ export async function fetchGameDetails(slug: any) {
 	}
 }
 
+export async function fetchGameDescription(slug: any) {
+	noStore();
+	try {
+		const gameDetails = games.find(game => game.slug === slug);
+        return {
+			message: 'Success.',
+			success: true,
+            data: gameDetails?.description
+		};
+	} catch (error) {
+		console.error('Database Error:', error);
+		// throw new Error('Failed to fetch setting data.');
+	}
+}
+
 export async function fetchRelatedGames(slug: any, listLength: number) {
 	noStore();
     try {
