@@ -98,20 +98,19 @@ export const GameIframe = ({gameName}: {gameName: string}) => {
                 {
                     !loaderShow &&
                 
-                    <div style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
+                    <div className="game-div">
                         
                         {
-                            !iframeShow && <Grid container direction="column" style={{ width: '100%', height: '100%' }}>
-                                <Grid item xs={12} style={{ boxSizing: 'border-box', display: 'flex', flexFlow: 'column wrap', margin: 0, flex: '1 1 0%', overflow: 'hidden', width: '100%', height: '100%', maxWidth: '100%', maxHeight: 'none' }}>
+                            !iframeShow && <Grid container direction="column" className="iframe-div">
+                                <Grid item xs={12} className="iframe-grid">
                                     <span style={{ textAlign: 'center' }}>
-                                        <div style={{ width: '100%', height: '100%', position: 'absolute', overflow: 'hidden' }}>
+                                        <div className="video-div">
                                             <video 
                                                 loop 
                                                 autoPlay 
                                                 muted
                                                 preload="none" 
                                                 playsInline 
-                                                style={{ width: '100%', height: '100%', position: 'relative', zIndex: 1, opacity: 1, objectFit: 'cover', filter: 'blur(10px)' }} 
                                                 onError={(e) => console.error('Video failed to load', e)}
                                                 onLoadedData={() => console.log('Video loaded successfully')}
                                             >
@@ -152,8 +151,8 @@ export const GameIframe = ({gameName}: {gameName: string}) => {
                         }
 
                         <div className="iframeControlContainer">
-                            <Grid container direction="column" className="controlContainer">
-                                <Grid item style={{ paddingLeft: 15 }}>
+                            <Grid container direction="row" className="controlContainer">
+                                <Grid item className="game-title" style={{ paddingLeft: 15 }}>
                                     <div style={{ display: 'flex', alignItems: 'center' }}>
                                         <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="29px" height="36px" viewBox="0 0 29 35" version="1.1">
                                             <g id="surface1">
@@ -182,7 +181,7 @@ export const GameIframe = ({gameName}: {gameName: string}) => {
                                 </Grid>
                                 <Grid item style={{ paddingRight: 15 }}>
                                     <Grid container direction="row" sx={{ justifyContent: "center", alignItems: "center", flexWrap: "nowrap" }}>
-                                        <Grid item className="gameControlContainer" style={{ margin: '0px 16px 0px 0px', display: 'none' }}>
+                                        <Grid item className="gameControlContainer like" style={{ margin: '0px 16px 0px 0px', display: 'none' }}>
                                             <Tooltip title="Like" placement="top">
                                                 <Button variant="text" className="ratingButton css-1wxaqej gameControlBtn" tabIndex={0} type="button">
                                                     <Grid container direction="row" sx={{ justifyContent: "center", alignItems: "center", flexWrap: "nowrap" }}>
@@ -198,7 +197,7 @@ export const GameIframe = ({gameName}: {gameName: string}) => {
                                                 </Button>
                                             </Tooltip>
                                         </Grid>
-                                        <Grid item className="gameControlContainer" style={{ margin: '0px 16px 0px 0px', display: 'none' }}>
+                                        <Grid item className="gameControlContainer dislike" style={{ margin: '0px 16px 0px 0px', display: 'none' }}>
                                             <Tooltip title="Dislike" placement="top">
                                                 <Button variant="text" className="ratingButton css-1wxaqej gameControlBtn" tabIndex={0} type="button">
                                                     <Grid container direction="row" sx={{ justifyContent: "center", alignItems: "center", flexWrap: "nowrap" }}>
@@ -214,7 +213,7 @@ export const GameIframe = ({gameName}: {gameName: string}) => {
                                                 </Button>
                                             </Tooltip>
                                         </Grid>
-                                        <Grid item className="gameControlContainer" style={{ display: 'none' }}>
+                                        <Grid item className="gameControlContainer favorite" style={{ display: 'none' }}>
                                             <Tooltip title="Add To favorites" placement="top">
                                                 <Button variant="text" className="ratingButton css-1wxaqej gameControlBtn" tabIndex={0} type="button">
                                                     <Grid container direction="row" sx={{ justifyContent: "center", alignItems: "center", flexWrap: "nowrap" }}>
@@ -228,7 +227,7 @@ export const GameIframe = ({gameName}: {gameName: string}) => {
                                             </Tooltip>
                                         </Grid>
                                         <div className="devider" style = {{ display: 'none' }}></div>
-                                        <Grid item className="gameControlContainer" style = {{ display: 'none' }}>
+                                        <Grid item className="gameControlContainer feedback" style = {{ display: 'none' }}>
                                             <Tooltip title="Feedback" placement="top">
                                                 <Button variant="text" className="ratingButton css-1wxaqej gameControlBtn" tabIndex={0} type="button">
                                                     <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-14yq2cq" focusable="false" aria-hidden="true" viewBox="0 0 24 24" width="24" height="24">
@@ -240,7 +239,7 @@ export const GameIframe = ({gameName}: {gameName: string}) => {
                                             </Tooltip>
                                         </Grid>
                                         <div className="devider" style = {{ display: 'none' }}></div>
-                                        <Grid item className="gameControlContainer" style = {{ display: 'none' }}>
+                                        <Grid item className="gameControlContainer play-on-mobile" style = {{ display: 'none' }}>
                                             <Tooltip title="Play on mobile" placement="top">
                                                 <Button variant="text" className="ratingButton css-1wxaqej gameControlBtn" tabIndex={0} type="button">
                                                     <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-14yq2cq" focusable="false" aria-hidden="true" viewBox="0 0 24 24" width="24" height="24">
@@ -250,7 +249,7 @@ export const GameIframe = ({gameName}: {gameName: string}) => {
                                             </Tooltip>
                                         </Grid>
                                         <div className="devider" style = {{ display: 'none' }}></div>
-                                        <Grid item className="gameControlContainer">
+                                        <Grid item className="gameControlContainer fullscreen">
                                             <Tooltip title="Full Screen" placement="top">
                                                 <Button variant="text" className="ratingButton css-1wxaqej gameControlBtn" tabIndex={0} type="button" onClick={openFullscreen}>
                                                     <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-14yq2cq" focusable="false" aria-hidden="true" viewBox="0 0 24 24" width="24" height="24">
@@ -263,6 +262,7 @@ export const GameIframe = ({gameName}: {gameName: string}) => {
                                 </Grid>
                             </Grid>
                         </div>
+                        <div className="back-shadow"></div>
                     </div>
                 }
             </div>

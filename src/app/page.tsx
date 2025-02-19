@@ -10,7 +10,7 @@ import useScreenWidth from '@/hooks/useScreenWidth';
 
 export default function Home() {
   const screenWidth = useScreenWidth();
-  const [drawerShow, setDrawerShow] = useState(screenWidth > 450 ? true : false);
+  const [drawerShow, setDrawerShow] = useState((window && window.innerWidth < 450) ? false : true);
   return (
     <div>
       <CssBaseline />

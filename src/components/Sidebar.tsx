@@ -24,13 +24,13 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 const Sidebar = ({drawerShow}: {drawerShow: boolean}) => {
     const theme = useTheme();
     const screenWidth = useScreenWidth();
-    const [drawerOpen, setDrawerOpen] = useState(screenWidth > 450 ? false : true);
+    const [drawerOpen, setDrawerOpen] = useState((window && window.innerWidth < 450) ? true : false);
     return (
         <Drawer
             variant="persistent"
             style={{ background: '#0C0D14',borderRight: '1px solid #28293d', transition: 'visibility 0s, all .15s ease-in-out' }}
             sx={{
-                width: 240,
+                width: (window && window.innerWidth < 450) ? '100%' : 240,
                 flexShrink: 0,
                 [`& .MuiDrawer-paper`]: { width: drawerOpen ? 240 : 60, boxSizing: 'border-box', overflow: 'hidden' },
             }}

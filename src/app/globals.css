@@ -19,7 +19,7 @@ body {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Nunito, Arial, "Helvetica Neue", Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -424,8 +424,7 @@ a {
 }
 
 @media (max-width: 819px) {
-  .GamePageDesktop_mainContainer .GamePageDesktop_leaderboardContainer,
-  .GamePageDesktop_mainContainer .GamePageDesktop_underGameContainerGrid {
+  .GamePageDesktop_mainContainer .GamePageDesktop_leaderboardContainer {
     display: none;
   }
 }
@@ -580,9 +579,97 @@ a {
   }
 }
 
-@media (max-width: 819px) {
-  .GamePageDesktop_mainContainer .GamePageDesktop_leaderboardContainer,
-  .GamePageDesktop_mainContainer .GamePageDesktop_underGameContainerGrid {
+.game-div{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.iframe-div {
+  height: 100%;
+  width: 100%;
+}
+.iframe-grid {
+  box-sizing: border-box; 
+  display: flex; 
+  flex-flow: column wrap; 
+  margin: 0; 
+  flex: 1 1 0%; 
+  overflow: hidden; 
+  width: 100%; 
+  height: 100%; 
+  max-width: 100%; 
+  max-height: none;
+}
+
+.video-div {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  overflow: hidden;
+}
+.video-div video {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+  opacity: 1;
+  object-fit: cover;
+  filter: blur(10px);
+}
+
+.back-shadow{
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  bottom: 0px;
+  z-index: 1;
+  /* background: linear-gradient(rgba(19, 20, 30, 0) 0%, rgb(12, 13, 20) 60%, rgb(12, 13, 20) 100%); */
+}
+
+@media (orientation: portrait) and (max-height: 780px) {
+  .GamePageDesktop_Container {
+    height: calc(100vh - var(--header-height));
+    max-height: unset;
+  }
+  .GamePageDesktop_mainContainer {
+    padding: 0;
+  }
+  .GamePageDesktop_AspectRatioContainer {
+    aspect-ratio: auto;
+    max-height: none;
+    height: calc(100vh - var(--header-height));
+  }
+  .GameDetails {
+    background: none;
+    justify-content: flex-end;
+  }
+  .iframe-div {
+    height: calc(100% - 110px);
+    position: relative;
+  }
+  .video-div video {
+    height: 62%;
+    filter: blur(1px);
+  }
+  .back-shadow {
+    background: linear-gradient(rgba(19, 20, 30, 0) 0%, rgb(12, 13, 20) 52%, rgb(12, 13, 20) 100%);
+  }
+  .iframeControlContainer{
+    position: relative;
+  }
+  .controlContainer {
+    background: none;
+    justify-content: center;
+    height: 60px;
+  }
+  .gameControlContainer svg{
+    fill: #FFF;
+  }
+  .controlContainer .game-title,
+  .controlContainer .devider,
+  .controlContainer .play-on-mobile,
+  .controlContainer .fullscreen {
     display: none;
   }
 }
