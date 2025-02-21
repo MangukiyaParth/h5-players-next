@@ -6,9 +6,14 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { useEffect, useState } from 'react';
 import { GameThumb } from './Home';
 import { fetchGameList } from '@/app/lib/games';
+import { useMediaQuery } from 'react-responsive';
 
 export const Category = ({id}:{id: any}) => {
-    const [drawerShow, setDrawerShow] = useState(true);
+    const isMobile = useMediaQuery({ maxWidth: 450 });
+    const [drawerShow, setDrawerShow] = useState(false);
+    useEffect(() => {
+        setDrawerShow(!isMobile);
+    }, [isMobile]);
     const [gameDetails, setGameDetails] = useState<{ name: string; video: string; image: string; slug: string; category: string; }[]>([]);
     useEffect(()=>{
         getDetails();

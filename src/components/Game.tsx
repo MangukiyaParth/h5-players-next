@@ -3,14 +3,18 @@ import Navbar from '../components/Navbar';
 import { Button, Container, Grid, Tooltip, Typography } from '@mui/material';
 import Sidebar from '@/components/Sidebar';
 import CssBaseline from '@mui/material/CssBaseline';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { GameThumb } from './Home';
 import { fetchGameDescription, fetchGameDetails, fetchRelatedGames } from '@/app/lib/games';
 import { useMediaQuery } from 'react-responsive';
 
 export const Game = ({id}:{id: any}) => {
+    const isMobile = useMediaQuery({ maxWidth: 450 });
     const gameName = id;
-    const [drawerShow, setDrawerShow] = useState(true);
+    const [drawerShow, setDrawerShow] = useState(false);
+    useEffect(() => {
+        setDrawerShow(!isMobile);
+    }, [isMobile]);
     return (
         <>
         <CssBaseline />
@@ -49,6 +53,7 @@ export const Game = ({id}:{id: any}) => {
 
 export const GameIframe = ({gameName}: {gameName: string}) => {
     
+    const iframeRef = useRef<HTMLIFrameElement>(null);
     const isMobile = useMediaQuery({ maxWidth: 450 });
     const [iframeShow, setIframeShow] = useState(false);
     const [loaderShow, setLoaderShow] = useState(true);
@@ -73,17 +78,28 @@ export const GameIframe = ({gameName}: {gameName: string}) => {
 	}
 
     const openFullscreen = () => {
-        const elem = document.getElementById("game-iframe");
-        if (elem) {
-            if (elem.requestFullscreen) {
-                elem.requestFullscreen();
-            } else if ((elem as any).webkitRequestFullscreen) { /* Safari */
-                (elem as any).webkitRequestFullscreen();
-            } else if ((elem as any).msRequestFullscreen) { /* IE11 */
-                (elem as any).msRequestFullscreen();
+        // const iframe = document.getElementById("game-iframe");
+        const iframe = iframeRef.current;
+        if (iframe) {
+            if (iframe.requestFullscreen) {
+              iframe.requestFullscreen();
             }
         }
     }
+
+    useEffect(() => {
+        const handleFullscreenChange = () => {
+            if (!document.fullscreenElement) {
+                if(isMobile){
+                    setIframeShow(false);
+                }
+            }
+        };
+        document.addEventListener('fullscreenchange', handleFullscreenChange);
+        return () => {
+            document.removeEventListener('fullscreenchange', handleFullscreenChange);
+        };
+    }, []);
 
     const playNow = () => {
         setIframeShow(true);
@@ -136,19 +152,17 @@ export const GameIframe = ({gameName}: {gameName: string}) => {
                             </Grid>
                         }
 
-                        {
-                            iframeShow && <iframe 
-                                id="game-iframe" 
-                                src={`https://games.h5players.com/${gameDetails.slug}/`} 
-                                title={decodeURI(gameDetails.name)} 
-                                allow="autoplay; payment; fullscreen; microphone; focus-without-user-activation *; screen-wake-lock; gamepad; clipboard-read; clipboard-write; accelerometer; gyroscope; " 
-                                allowFullScreen={true} 
-                                sandbox="allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-presentation allow-scripts allow-same-origin allow-downloads  allow-popups allow-popups-to-escape-sandbox" 
-                                loading="eager" 
-                                data-hj-allow-iframe="true" 
-                                style={{ border: 0, margin: 0, padding: 0, width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, userSelect: 'none' }}>
-                            </iframe>
-                        }
+                        <iframe 
+                            id="game-iframe" 
+                            ref={iframeRef}
+                            src={`https://games.h5players.com/${gameDetails.slug}/`} 
+                            title={decodeURI(gameDetails.name)} 
+                            allow="autoplay; payment; fullscreen; microphone; screen-wake-lock; gamepad; clipboard-read; clipboard-write; accelerometer; gyroscope; " 
+                            allowFullScreen={true} 
+                            sandbox="allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-presentation allow-scripts allow-same-origin allow-downloads  allow-popups allow-popups-to-escape-sandbox" 
+                            loading="eager" 
+                            style={{ display: (iframeShow) ? 'block' : 'none', border: 0, margin: 0, padding: 0, width: '100%', height: '100%', position: 'absolute', top: 0, left: 0, userSelect: 'none' }}>
+                        </iframe>
 
                         <div className="iframeControlContainer">
                             <Grid container direction="row" className="controlContainer">
@@ -262,7 +276,7 @@ export const GameIframe = ({gameName}: {gameName: string}) => {
                                 </Grid>
                             </Grid>
                         </div>
-                        <div className="back-shadow"></div>
+                        { !iframeShow && <div className="back-shadow"></div> }
                     </div>
                 }
             </div>

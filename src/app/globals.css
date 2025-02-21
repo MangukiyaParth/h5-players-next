@@ -31,6 +31,7 @@ body {
 
 .navbar > div {
   border-right: 1px solid #28293d;
+  background: #0c0d14;
 }
 
 * {
