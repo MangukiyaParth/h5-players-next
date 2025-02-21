@@ -6,7 +6,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { useEffect, useState } from 'react';
 import { GameThumb } from './Home';
 import { fetchGameDescription, fetchGameDetails, fetchRelatedGames } from '@/app/lib/games';
-import useScreenWidth from '@/hooks/useScreenWidth';
+import { useMediaQuery } from 'react-responsive';
 
 export const Game = ({id}:{id: any}) => {
     const gameName = id;
@@ -49,7 +49,7 @@ export const Game = ({id}:{id: any}) => {
 
 export const GameIframe = ({gameName}: {gameName: string}) => {
     
-    const screenWidth = useScreenWidth();
+    const isMobile = useMediaQuery({ maxWidth: 450 });
     const [iframeShow, setIframeShow] = useState(false);
     const [loaderShow, setLoaderShow] = useState(true);
     const [gameDetails, setGameDetails] = useState({ name: "", image: "", video: "",  slug: "", category: "" });
@@ -87,7 +87,7 @@ export const GameIframe = ({gameName}: {gameName: string}) => {
 
     const playNow = () => {
         setIframeShow(true);
-        if(screenWidth <= 450){
+        if(isMobile){
             openFullscreen();
         }
     }

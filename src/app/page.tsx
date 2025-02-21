@@ -4,13 +4,16 @@ import Navbar from '../components/Navbar';
 import { Container, Typography } from '@mui/material';
 import Sidebar from '@/components/Sidebar';
 import CssBaseline from '@mui/material/CssBaseline';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { HomeComponent } from '@/components/Home';
-import useScreenWidth from '@/hooks/useScreenWidth';
+import { useMediaQuery } from 'react-responsive';
 
 export default function Home() {
-  const screenWidth = useScreenWidth();
-  const [drawerShow, setDrawerShow] = useState((window && window.innerWidth < 450) ? false : true);
+  const isMobile = useMediaQuery({ maxWidth: 450 });
+  const [drawerShow, setDrawerShow] = useState(false);
+  useEffect(() => {
+    setDrawerShow(!isMobile);
+  }, [isMobile]);
   return (
     <div>
       <CssBaseline />

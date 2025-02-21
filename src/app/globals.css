@@ -81,6 +81,16 @@ a {
   }
 }
 
+.navbar {
+  width: 240px;
+}
+
+@media (max-width: 450px) {
+  .navbar {
+    width: 100%;
+  }
+}
+
 .menu-item {
   padding-top: 3px;
   padding-bottom: 3px;

@@ -1,3 +1,5 @@
+"use client";
+
 import * as React from 'react';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -7,10 +9,9 @@ import ListItemText from '@mui/material/ListItemText';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import { useState } from 'react';
-import Link from 'next/link';
+import { useEffect, useState } from 'react';
 import Divider from '@mui/material/Divider';
-import useScreenWidth from '@/hooks/useScreenWidth';
+import { useMediaQuery } from 'react-responsive';
 
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -23,14 +24,16 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 
 const Sidebar = ({drawerShow}: {drawerShow: boolean}) => {
     const theme = useTheme();
-    const screenWidth = useScreenWidth();
-    const [drawerOpen, setDrawerOpen] = useState((window && window.innerWidth < 450) ? true : false);
+    const isMobile = useMediaQuery({ maxWidth: 450 });
+    const [drawerOpen, setDrawerOpen] = useState(true);
+    useEffect(() => {
+        setDrawerOpen(isMobile);
+    }, [isMobile]);
     return (
         <Drawer
             variant="persistent"
             style={{ background: '#0C0D14',borderRight: '1px solid #28293d', transition: 'visibility 0s, all .15s ease-in-out' }}
             sx={{
-                width: (window && window.innerWidth < 450) ? '100%' : 240,
                 flexShrink: 0,
                 [`& .MuiDrawer-paper`]: { width: drawerOpen ? 240 : 60, boxSizing: 'border-box', overflow: 'hidden' },
             }}

@@ -4,8 +4,8 @@ import { Card, CardMedia, Typography } from '@mui/material';
 import React, { useEffect, useState, JSX } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
-import useScreenWidth from "@/hooks/useScreenWidth";
 import { fetchGameList, fetchPopulerList } from '@/app/lib/games';
+import { useMediaQuery } from 'react-responsive';
 
 export const GameThumb = ({name, video, image, link, height}: {name: string, video: string, image: string, link: string, height: string}) => {
     const [isHovering, setIsHovered] = useState(false);
@@ -49,7 +49,8 @@ export const GameMobileThumb = ({name, video, image, link}: {name: string, video
 };
 
 export const HomeComponent = () => {
-    const screenWidth = useScreenWidth();
+    const isMobile = useMediaQuery({ maxWidth: 450 });
+    const isTablate = useMediaQuery({ maxWidth: 1050 });
     const [populerGameDetails, setPopulerGameDetails] = useState<{ name: string; video: string; image: string; slug: string; category: string; }[]>([]);
     const [actionGameDetails, setActionGameDetails] = useState<{ name: string; video: string; image: string; slug: string; category: string; }[]>([]);
     const [arcadeGameDetails, setArcadeGameDetails] = useState<{ name: string; video: string; image: string; slug: string; category: string; }[]>([]);
@@ -104,8 +105,8 @@ export const HomeComponent = () => {
     return (
         <>
         {
-            (screenWidth > 450) &&
-            <Carousel showArrows={true} autoPlay={false} showThumbs={false} showStatus={false} centerMode={true} centerSlidePercentage={(screenWidth <= 1050) ? 50 : 33.33}>
+            (!isMobile) &&
+            <Carousel showArrows={true} autoPlay={false} showThumbs={false} showStatus={false} centerMode={true} centerSlidePercentage={(isTablate) ? 50 : 33.33}>
                 {
                     populerGameDetails.reduce<JSX.Element[]>((acc, game, index) => {
                         
@@ -156,8 +157,8 @@ export const HomeComponent = () => {
             </Carousel>
         }
         {
-            (screenWidth <= 450) &&
-            <Carousel showArrows={true} autoPlay={false} showThumbs={false} showStatus={false} centerMode={true} centerSlidePercentage={(screenWidth <= 450) ? 100 : ((screenWidth <= 1050) ? 50 : 33.33)}>
+            (isMobile) &&
+            <Carousel showArrows={true} autoPlay={false} showThumbs={false} showStatus={false} centerMode={true} centerSlidePercentage={(isMobile) ? 100 : (isTablate ? 50 : 33.33)}>
                 {
                     populerGameDetails.map((game, index) => (
                         <div key={index} style={{ margin: '0 5px', position: 'relative' }}>
@@ -170,7 +171,7 @@ export const HomeComponent = () => {
         <Typography variant="h6" gutterBottom sx={{ marginTop: 4 }}>
             Action Games
         </Typography>
-        <Carousel showArrows={true} autoPlay={false} showThumbs={false} showStatus={false} centerMode={true} centerSlidePercentage={(screenWidth <= 1050) ? 50 : 33.33}>
+        <Carousel showArrows={true} autoPlay={false} showThumbs={false} showStatus={false} centerMode={true} centerSlidePercentage={(isTablate) ? 50 : 33.33}>
             {
                 actionGameDetails.map((game, index) => (
                     <div key={index} style={{ margin: '0 5px', position: 'relative' }}>
@@ -183,7 +184,7 @@ export const HomeComponent = () => {
         <Typography variant="h6" gutterBottom sx={{ marginTop: 4 }}>
             Arcade Games
         </Typography>
-        <Carousel showArrows={true} autoPlay={false} showThumbs={false} showStatus={false} centerMode={true} centerSlidePercentage={(screenWidth <= 1050) ? 50 : 33.33}>
+        <Carousel showArrows={true} autoPlay={false} showThumbs={false} showStatus={false} centerMode={true} centerSlidePercentage={isTablate ? 50 : 33.33}>
             {
                 arcadeGameDetails.map((game, index) => (
                     <div key={index} style={{ margin: '0 5px', position: 'relative' }}>
@@ -196,7 +197,7 @@ export const HomeComponent = () => {
         <Typography variant="h6" gutterBottom sx={{ marginTop: 4 }}>
             Multiplayer Games
         </Typography>
-        <Carousel showArrows={true} autoPlay={false} showThumbs={false} showStatus={false} centerMode={true} centerSlidePercentage={(screenWidth <= 1050) ? 50 : 33.33}>
+        <Carousel showArrows={true} autoPlay={false} showThumbs={false} showStatus={false} centerMode={true} centerSlidePercentage={isTablate ? 50 : 33.33}>
             {
                 multiplayerGameDetails.map((game, index) => (
                     <div key={index} style={{ margin: '0 5px', position: 'relative' }}>
@@ -209,7 +210,7 @@ export const HomeComponent = () => {
         <Typography variant="h6" gutterBottom sx={{ marginTop: 4 }}>
             Runner Games
         </Typography>
-        <Carousel showArrows={true} autoPlay={false} showThumbs={false} showStatus={false} centerMode={true} centerSlidePercentage={(screenWidth <= 1050) ? 50 : 33.33}>
+        <Carousel showArrows={true} autoPlay={false} showThumbs={false} showStatus={false} centerMode={true} centerSlidePercentage={isTablate ? 50 : 33.33}>
             {
                 runnerGameDetails.map((game, index) => (
                     <div key={index} style={{ margin: '0 5px', position: 'relative' }}>
@@ -222,7 +223,7 @@ export const HomeComponent = () => {
         <Typography variant="h6" gutterBottom sx={{ marginTop: 4 }}>
             Sports Games
         </Typography>
-        <Carousel showArrows={true} autoPlay={false} showThumbs={false} showStatus={false} centerMode={true} centerSlidePercentage={(screenWidth <= 1050) ? 50 : 33.33}>
+        <Carousel showArrows={true} autoPlay={false} showThumbs={false} showStatus={false} centerMode={true} centerSlidePercentage={isTablate ? 50 : 33.33}>
             {
                 sportsGameDetails.map((game, index) => (
                     <div key={index} style={{ margin: '0 5px', position: 'relative' }}>
@@ -235,7 +236,7 @@ export const HomeComponent = () => {
         <Typography variant="h6" gutterBottom sx={{ marginTop: 4 }}>
             Puzzle Games
         </Typography>
-        <Carousel showArrows={true} autoPlay={false} showThumbs={false} showStatus={false} centerMode={true} centerSlidePercentage={(screenWidth <= 1050) ? 50 : 33.33}>
+        <Carousel showArrows={true} autoPlay={false} showThumbs={false} showStatus={false} centerMode={true} centerSlidePercentage={isTablate ? 50 : 33.33}>
             {
                 puzzleGameDetails.map((game, index) => (
                     <div key={index} style={{ margin: '0 5px', position: 'relative' }}>
@@ -248,7 +249,7 @@ export const HomeComponent = () => {
         <Typography variant="h6" gutterBottom sx={{ marginTop: 4 }}>
             Racing Games
         </Typography>
-        <Carousel showArrows={true} autoPlay={false} showThumbs={false} showStatus={false} centerMode={true} centerSlidePercentage={(screenWidth <= 1050) ? 50 : 33.33}>
+        <Carousel showArrows={true} autoPlay={false} showThumbs={false} showStatus={false} centerMode={true} centerSlidePercentage={isTablate ? 50 : 33.33}>
             {
                 racingGameDetails.map((game, index) => (
                     <div key={index} style={{ margin: '0 5px', position: 'relative' }}>
@@ -261,7 +262,7 @@ export const HomeComponent = () => {
         <Typography variant="h6" gutterBottom sx={{ marginTop: 4 }}>
             Strategy Games
         </Typography>
-        <Carousel showArrows={true} autoPlay={false} showThumbs={false} showStatus={false} centerMode={true} centerSlidePercentage={(screenWidth <= 1050) ? 50 : 33.33}>
+        <Carousel showArrows={true} autoPlay={false} showThumbs={false} showStatus={false} centerMode={true} centerSlidePercentage={isTablate ? 50 : 33.33}>
             {
                 strategyGameDetails.map((game, index) => (
                     <div key={index} style={{ margin: '0 5px', position: 'relative' }}>
