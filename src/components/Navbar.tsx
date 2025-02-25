@@ -10,6 +10,8 @@ import IconButton from '@mui/material/IconButton';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
+import ManageSearchIcon from '@mui/icons-material/ManageSearch';
+import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import Link from 'next/link';
 
 const Navbar = ({drawerShow, setDrawerShow}: {drawerShow: boolean, setDrawerShow: any}) => {
@@ -17,37 +19,77 @@ const Navbar = ({drawerShow, setDrawerShow}: {drawerShow: boolean, setDrawerShow
     setDrawerShow(!drawerShow);
   };
   return (
-    <AppBar position="fixed" sx={{ backdropFilter: 'blur(8px)', backgroundColor: '#212233e6', boxShadow: '0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12)', zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+    <AppBar className={ drawerShow ? 'drawer-show' : '' } position="fixed" sx={{ backdropFilter: 'blur(8px)', backgroundColor: '#212233e6', boxShadow: '0px 3px 3px -2px rgba(0,0,0,0.2),0px 3px 4px 0px rgba(0,0,0,0.14),0px 1px 8px 0px rgba(0,0,0,0.12)', zIndex: (theme) => theme.zIndex.drawer + 1 }}>
       <Toolbar style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'row', alignItems: 'center' }}>
         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
           <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={handleDrawer}
-              edge="start"
-              sx={[
-                {
-                  mr: 2,
+          color="inherit"
+          aria-label="open drawer"
+          onClick={handleDrawer}
+          edge="start"
+          sx={[
+            {
+            mr: 2,
+            '@media (max-width: 450px)': {
+              mr: 0,
+              order: 2,
+            },
+            },
+          ]}
+          >
+            <MenuOpenIcon sx={[
+              !drawerShow && { transform: 'rotate(180deg)' },
+              {
+                transition: 'transform 0.5s',
+                '@media (max-width: 450px)': {
+                  display: 'none'
                 },
-              ]}
-            >
-              <MenuOpenIcon sx={[
-                !drawerShow && { transform: 'rotate(180deg)' },
+              },
+            ]} />
+            {
+              !drawerShow && <ManageSearchIcon sx={[
+                {
+                  height: '1.8rem',
+                  width: '1.8rem',
+                  '@media (min-width: 450px)': {
+                    display: 'none'
+                  },
+                }
               ]} />
+            }
+            {
+              drawerShow && <KeyboardBackspaceIcon sx={[
+                {
+                  height: '1.8rem',
+                  width: '1.8rem',
+                  '@media (min-width: 450px)': {
+                    display: 'none'
+                  },
+                }
+              ]} />
+            }
           </IconButton>
-          <Link href="/">
-            <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'stretch' }}>
-              <img src="/h5-players.png" className="H5PlayerIcon" alt="logo" style={{ height: 35, marginRight: 10 }} />
-              <img src="/h5-players-text.svg" alt="logo" style={{ height: 40, marginRight: 10 }} />
+          <Link href="/" className="header-link">
+            <div  className="header-logo">
+              <img 
+                src="/h5-players.png" 
+                className="H5PlayerIcon" 
+                alt="logo"
+              />
+              <img 
+                src="/h5-players-text.svg" 
+                alt="logo" 
+                className="H5PlayerText" 
+              />
             </div>
           </Link>
         </div>
         <TextField
-          style={{ position: 'absolute', left: '50%', top: '50%', transform: 'translate(-50%, -50%)', border: 'none', display: 'none' }}
           variant="outlined"
           size="small"
           placeholder="Search"
           color="primary"
+          style={{ display: 'none' }}
           slotProps={{
             input: {
               endAdornment: (
@@ -59,7 +101,7 @@ const Navbar = ({drawerShow, setDrawerShow}: {drawerShow: boolean, setDrawerShow
           }}
           className="header-search"
         />
-        <div style={{ display: 'none' }}>
+        <div className="header-action" style={{ display: 'none' }}>
           <Button variant="contained" color="inherit" sx={{ backgroundColor: '#ffffff1a', borderRadius: 30, padding: '10px', minWidth: 'auto', marginRight: 1 }}>
             <PeopleOutlineIcon />
           </Button>

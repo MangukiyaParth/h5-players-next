@@ -35,12 +35,12 @@ const Sidebar = ({drawerShow}: {drawerShow: boolean}) => {
             style={{ background: '#0C0D14',borderRight: '1px solid #28293d', transition: 'visibility 0s, all .15s ease-in-out' }}
             sx={{
                 flexShrink: 0,
-                [`& .MuiDrawer-paper`]: { width: drawerOpen ? 240 : 60, boxSizing: 'border-box', overflow: 'hidden' },
+                [`& .MuiDrawer-paper`]: { boxSizing: 'border-box', overflow: 'hidden' },
             }}
             onMouseEnter={() => setDrawerOpen(true)}
             onMouseLeave={() => setDrawerOpen(false)}
             open={drawerShow}
-            className="dark-theme navbar"
+            className={`dark-theme navbar ${drawerOpen ? 'full-sidebar' : 'half-sidebar'}`}
         >
             <Toolbar />
             <Box sx={{ overflowY: drawerOpen ? 'auto' : 'hidden', overflowX: 'hidden' }}>

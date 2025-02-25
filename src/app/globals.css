@@ -86,8 +86,19 @@ a {
   width: 240px;
 }
 
+.full-sidebar .MuiDrawer-paper {
+  width: 240px;
+}
+.half-sidebar .MuiDrawer-paper {
+  width: 60px;
+}
+
 @media (max-width: 450px) {
   .navbar {
+    width: 100%;
+  }
+
+  .full-sidebar .MuiDrawer-paper {
     width: 100%;
   }
 }
@@ -114,19 +125,50 @@ a {
   color: #aaadbe;
 }
 
+.header-search {
+  position: absolute;
+  width: 50%;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border: none;
+}
+
+.header-logo {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+
 @media (min-width: 1082px) {
   .header-search {
-      width: 460px;
-      margin: auto;
+    width: 460px;
+    margin: auto;
   }
 }
 
 @media (min-width: 600px) {
   .header-search {
-      outline: solid 0px;
+    outline: solid 0px;
   }
 }
 
+@media (orientation: portrait) and (max-width: 450px) {
+  .header-search {
+    width: 100%;
+    display: none;
+    left: 65%;
+  }
+  .drawer-show .header-search {
+    display: block;
+  }
+  .drawer-show .header-link {
+    display: none;
+  }
+  .drawer-show .header-action {
+    display: none;
+  }
+}
 .header-search > div {
   border-radius: 30px;
   border-width: 1px;
@@ -638,7 +680,25 @@ a {
   /* background: linear-gradient(rgba(19, 20, 30, 0) 0%, rgb(12, 13, 20) 60%, rgb(12, 13, 20) 100%); */
 }
 
-@media (orientation: portrait) and (max-height: 780px) {
+.H5PlayerIcon {
+  height: 35px;
+  margin-right: 10px;
+}
+
+.H5PlayerText {
+  height: 40px;
+}
+
+@media (orientation: portrait) and (max-width: 450px) {
+  .H5PlayerIcon {
+    height: 25px;
+  }
+  
+  .H5PlayerText {
+    height: 30px;
+    margin-right: 10px;
+  }
+
   .GamePageDesktop_Container {
     height: calc(100vh - var(--header-height));
     max-height: unset;
@@ -656,7 +716,7 @@ a {
     justify-content: flex-end;
   }
   .iframe-div {
-    height: calc(100% - 110px);
+    height: calc(100svh - 175px);
     position: relative;
   }
   .video-div video {
@@ -703,4 +763,13 @@ a {
   content-visibility: visible;
   width: 100%;
   margin: 0;
+}
+
+.detail-title{
+  display: inline;
+  color: var(--foreground);
+}
+
+details {
+  margin-top: 10px;
 }
